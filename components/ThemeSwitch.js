@@ -20,23 +20,27 @@ const ThemeSwitch = () => {
   // 修改当前路径url中的 theme 参数
   // 例如 http://localhost?theme=hexo 跳转到 http://localhost?theme=newTheme
   const onThemeSelectChange = (e) => {
+    document.ontouchmove = document.ontouchend = document.onmousemove = document.onmouseup = null
     setIsLoading(true)
     const newTheme = e.target.value
     const query = router.query
     query.theme = newTheme
     router.push({ pathname: router.pathname, query }).then(() => {
-      setIsLoading(false)
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 500);
     })
   }
 
   const onLangSelectChange = (e) => {
+    document.ontouchmove = document.ontouchend = document.onmousemove = document.onmouseup = null
     const newLang = e.target.value
     changeLang(newLang)
   }
 
   return (<>
         <Draggable>
-            <div id="draggableBox" style={{ left: '0px', top: '80vh' }} className="fixed group space-y-2 overflow-hidden z-50 p-3 flex flex-col items-start dark:text-white bg-gray-50 dark:bg-black rounded-xl shadow-lg border dark:border-gray-800">
+            <div id="draggableBox" style={{ left: '0px', top: '80vh' }} className="fixed group space-y-2 overflow-hidden z-50 p-3 flex flex-col items-start dark:text-white bg-white dark:bg-black rounded-xl shadow-lg ">
                 {/* 深色按钮 */}
                 <div className="text-sm flex items-center w-0 group-hover:w-32 transition-all duration-200">
                     <DarkModeButton />
@@ -72,8 +76,8 @@ const ThemeSwitch = () => {
         </Draggable>
 
         {/* 切换主题加载时的全屏遮罩 */}
-        <div className={`${isLoading ? 'opacity-50 ' : 'opacity-0'} 
-            w-screen h-screen bg-black text-white shadow-text flex justify-center items-center
+        <div className={`${isLoading ? 'opacity-90 ' : 'opacity-0'} 
+            w-screen h-screen glassmorphism bg-black text-white shadow-text flex justify-center items-center
             transition-all fixed top-0 left-0 pointer-events-none duration-1000 z-50 shadow-inner`}>
             <i className='text-3xl mr-5 fas fa-spinner animate-spin' />
         </div>
